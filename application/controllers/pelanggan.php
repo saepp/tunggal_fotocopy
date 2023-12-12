@@ -29,10 +29,10 @@ class pelanggan extends CI_Controller
 
         try {
             $this->PelangganModel->insert($data);
-            $this->session->set_flashdata('success', 'Data berhasil disimpan');
+            $this->session->set_flashdata('message', 'Data berhasil disimpan');
             redirect(base_url('/pelanggan'));
         } catch (\Exception $e) {
-            $this->session->set_flashdata('error', 'Data gagal disimpan');
+            $this->session->set_flashdata('message', 'Data gagal disimpan');
             redirect(base_url('/pelanggan/create'));
         }
     }

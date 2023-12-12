@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
  */
-$config['base_url'] = 'http://localhost/tubes';
+$config['base_url'] = 'http://localhost/tunggal_fotocopy';
 
 /*
 |--------------------------------------------------------------------------
@@ -102,7 +102,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
  */
-$config['enable_hooks'] = false;
+$config['enable_hooks'] = true;
 
 /*
 |--------------------------------------------------------------------------
@@ -138,7 +138,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |    autoloading (application/config/autoload.php)
  */
-$config['composer_autoload'] = true;
+$config['composer_autoload'] = FCPATH . 'vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------

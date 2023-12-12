@@ -24,16 +24,16 @@ class pegawai extends CI_Controller
             'id_pegawai' => $this->input->post('id_pegawai'),
             'nama_pegawai' => $this->input->post('nama_pegawai'),
             'alamat_pegawai' => $this->input->post('alamat_pegawai'),
-            'no_telp_pegawai' => $this->input->post('no_telp_pegawai'),
+            'no_telp_pegawai' => intval($this->input->post('no_telp_pegawai')),
             'posisi_pegawai' => $this->input->post('posisi_pegawai'),
         ];
 
         try {
             $this->PegawaiModel->insert($data);
-            $this->session->set_flashdata('success', 'Data berhasil disimpan');
+            $this->session->set_flashdata('message', 'Data berhasil disimpan');
             redirect(base_url('/pegawai'));
         } catch (\Exception $e) {
-            $this->session->set_flashdata('error', 'Data gagal disimpan');
+            $this->session->set_flashdata('message', 'Data gagal disimpan');
             redirect(base_url('/pegawai/create'));
         }
     }

@@ -28,10 +28,10 @@ class produk extends CI_Controller
 
         try {
             $this->ProdukModel->insert($data);
-            $this->session->set_flashdata('success', 'Data berhasil disimpan');
+            $this->session->set_flashdata('message', 'Data berhasil disimpan');
             redirect(base_url('/produk'));
         } catch (\Exception $e) {
-            $this->session->set_flashdata('error', 'Data gagal disimpan');
+            $this->session->set_flashdata('message', 'Data gagal disimpan');
             redirect(base_url('/produk/create'));
         }
     }
