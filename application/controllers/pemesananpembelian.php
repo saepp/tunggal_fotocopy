@@ -5,7 +5,10 @@ class pemesananpembelian extends CI_Controller
     {
         parent::__construct();
         $this->load->model('PemesananpembelianheaderModel');
+        $this->load->model('PemesananpembeliandetailModel');
         $this->load->model('SupplierModel');
+        $this->load->model('ProdukModel');
+        $this->load->model('PegawaiModel');
     }
 
     public function index()
@@ -83,5 +86,78 @@ class pemesananpembelian extends CI_Controller
             $this->session->set_flashdata('message', 'Data gagal dihapus');
         }
         redirect(base_url('/pemesananpembelian'));
+    }
+
+    public function detail($id_pemesanan_pembelian_header)
+    {
+        $data = $this->PemesananpembeliandetailModel->getAllData($id_pemesanan_pembelian_header);
+        $header = $this->PemesananpembeliandetailModel->getAllHeader($id_pemesanan_pembelian_header);
+        $produk = $this->ProdukModel->getAllData();
+        $pegawai = $this->PegawaiModel->getAllData();
+        $this->load->view('pemesananpembelian/detail', ['id_pemesanan_pembelian_header' => $id_pemesanan_pembelian_header, 'data' => $data, 'produk' => $produk, 'pegawai' => $pegawai, 'header' => $header]);
+    }
+
+    public function storedetail()
+    {
+        $data = [
+            'id_pemesanan_pembelian_detail' => null,
+            'kuantitas' => $this->input->post('kuantitas'),
+            'base_price' => round(($this->input->post('base_price') / 1.11), 0),
+            'ppn' => $this->input->post('base_price') - round(($this->input->post('base_price') / 1.11), 0),
+            'id_pemesanan_pembelian_header' => $this->input->post('id_pemesanan_pembelian_header'),
+            'id_produk' => $this->input->post('id_produk'),
+            'id_pegawai' => $this->input->post('id_pegawai'),
+        ];
+
+        try {
+            $this->PemesananpembeliandetailModel->insert($data);
+            $this->session->set_flashdata('message', 'Data berhasil disimpan');
+            redirect('/pemesananpembelian/' . $this->input->post('id_pemesanan_pembelian_header') . '/detail');
+        } catch (\Exception $e) {
+            $this->session->set_flashdata('message', 'Data gagal disimpan');
+            redirect('/pemesananpembelian/' . $this->input->post('id_pemesanan_pembelian_header') . '/detail/');
+        }
+    }
+
+    public function editdetail($id_pemesanan_pembelian_header, $id_pemesanan_pembelian_detail)
+    {
+        $data = $this->PemesananpembeliandetailModel->getDataById($id_pemesanan_pembelian_detail);
+        $header = $this->PemesananpembeliandetailModel->getAllHeader($id_pemesanan_pembelian_header);
+        $produk = $this->ProdukModel->getAllData();
+        $pegawai = $this->PegawaiModel->getAllData();
+
+        $this->load->view('pemesananpembelian/editdetail', ['id_pemesanan_pembelian_header' => $id_pemesanan_pembelian_header, 'data' => $data, 'produk' => $produk, 'pegawai' => $pegawai, 'header' => $header]);
+    }
+
+    public function updatedetail($id_pemesanan_pembelian_header, $id_pemesanan_pembelian_detail)
+    {
+        $data = [
+            'kuantitas' => $this->input->post('kuantitas'),
+            'base_price' => round(($this->input->post('base_price') / 1.11), 0),
+            'ppn' => $this->input->post('base_price') - round(($this->input->post('base_price') / 1.11), 0),
+            'id_pemesanan_pembelian_header' => $id_pemesanan_pembelian_header,
+            'id_produk' => $this->input->post('id_produk'),
+            'id_pegawai' => $this->input->post('id_pegawai'),
+        ];
+
+        try {
+            $this->PemesananpembeliandetailModel->update($id_pemesanan_pembelian_header, $id_pemesanan_pembelian_detail, $data);
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
+            redirect('/pemesananpembelian/' . $id_pemesanan_pembelian_header . '/detail');
+        } catch (\Exception $e) {
+            $this->session->set_flashdata('message', 'Data berhasil diubah');
+            redirect('/pemesananpembelian/' . $id_pemesanan_pembelian_header . '/editdetail');
+        }
+    }
+
+    public function deletedetail($id_pemesanan_pembelian_header, $id_pemesanan_pembelian_detail)
+    {
+        try {
+            $this->PemesananpembeliandetailModel->delete($id_pemesanan_pembelian_detail);
+            $this->session->set_flashdata('message', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            $this->session->set_flashdata('message', 'Data gagal dihapus');
+        }
+        redirect('/pemesananpembelian/' . $id_pemesanan_pembelian_header . '/detail');
     }
 }
