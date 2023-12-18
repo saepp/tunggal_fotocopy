@@ -11,18 +11,18 @@
 	<a href="<?=base_url('/pelanggan/create');?>">Tambah Data</a>
 	<table border="1">
 		<tr>
-			<th>ID Pelanggan</th>
 			<th>Nama Pelanggan</th>
 			<th>Alamat Pelanggan</th>
+			<th>Jenis Kelamin Pelanggan</th>
 			<th>No Telepon Pelanggan</th>
 			<th colspan="2">Aksi</th>
 		</tr>
 <?php if (count($data) > 0): ?>
 	<?php foreach ($data as $row): ?>
 		<tr>
-			<td><?=$row->id_pelanggan;?></td>
 			<td><?=$row->nama_pelanggan;?></td>
 			<td><?=$row->alamat_pelanggan;?></td>
+			<td><?=$row->jenis_kelamin_pelanggan;?></td>
 			<td><?=$row->no_telp_pelanggan;?></td>
 			<td><a href="<?=base_url('/pelanggan/edit/' . $row->id_pelanggan);?>">Edit Data</a></td>
 			<td><a href="<?=base_url('/pelanggan/delete/' . $row->id_pelanggan);?>">Hapus Data</a></td>

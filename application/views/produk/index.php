@@ -11,7 +11,6 @@
 	<a href="<?=base_url('/produk/create');?>">Tambah Data</a>
 	<table border="1">
 		<tr>
-			<th>ID Produk</th>
 			<th>Nama Produk</th>
 			<th>Satuan</th>
 			<th colspan="2">Aksi</th>
@@ -19,7 +18,6 @@
 <?php if (count($data) > 0): ?>
 	<?php foreach ($data as $row): ?>
 		<tr>
-			<td><?=$row->id_produk;?></td>
 			<td><?=$row->nama_produk;?></td>
 			<td><?=$row->satuan;?></td>
 			<td><a href="<?=base_url('/produk/edit/' . $row->id_produk);?>">Edit Data</a></td>

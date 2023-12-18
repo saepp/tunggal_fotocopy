@@ -8,9 +8,6 @@
 <body>
 	<h3>Add Data Produk</h3>
 	<form method="POST" action="<?=base_url('/produk/store');?>">
-		<label for="id_produk">ID Produk : </label>
-		<input type="text" name="id_produk" id="id_produk" placeholder="Contoh : P001">
-		<br>
 		<label for="nama_produk">Nama Produk : </label>
 		<input type="text" name="nama_produk" id="nama_produk" placeholder="Contoh : John Doe">
 		<br>

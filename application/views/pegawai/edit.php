@@ -18,6 +18,12 @@
 		<label for="no_telp_pegawai">Nomor Telepon Pegawai : </label>
 		<input type="number" name="no_telp_pegawai" id="no_telp_pegawai" value="<?=$data->no_telp_pegawai;?>">
 		<br>
+		<label for="jenis_kelamin_pegawai">Jenis Kelamin Pegawai : </label>
+		<input type="radio" name="jenis_kelamin_pegawai" id="lakilaki" value="Laki - Laki" <?=$data->jenis_kelamin_pegawai == "Laki - Laki" ? "checked" : ""?>>
+		<label for="lakilaki">Laki - Laki</label>
+		<input type="radio" name="jenis_kelamin_pegawai" id="perempuan" value="Perempuan" <?=$data->jenis_kelamin_pegawai == "Perempuan" ? "checked" : ""?>>
+		<label for="perempuan">Perempuan</label>
+		<br>
 		<label for="posisi_pegawai">Posisi Pegawai : </label>
 		<input type="text" name="posisi_pegawai" id="posisi_pegawai" value="<?=$data->posisi_pegawai;?>">
 		<br>

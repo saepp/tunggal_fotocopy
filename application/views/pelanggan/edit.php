@@ -15,6 +15,12 @@
 		<label for="alamat_pelanggan">Alamat Pelanggan : </label>
 		<input type="text" name="alamat_pelanggan" id="alamat_pelanggan" value="<?=$data->alamat_pelanggan;?>">
 		<br>
+		<label for="jenis_kelamin_pelanggan">Alamat Pelanggan : </label>
+		<input type="radio" name="jenis_kelamin_pelanggan" id="lakilaki" value="Laki - Laki" <?=$data->jenis_kelamin_pelanggan == "Laki - Laki" ? "checked" : ""?>>
+		<label for="lakilaki">Laki - Laki</label>
+		<input type="radio" name="jenis_kelamin_pelanggan" id="perempuan" value="Perempuan" <?=$data->jenis_kelamin_pelanggan == "Perempuan" ? "checked" : ""?>>
+		<label for="perempuan">Perempuan</label>
+		<br>
 		<label for="no_telp_pelanggan">Nomor Telepon Pelanggan : </label>
 		<input type="number" name="no_telp_pelanggan" id="no_telp_pelanggan" value="<?=$data->no_telp_pelanggan;?>">
 		<br>

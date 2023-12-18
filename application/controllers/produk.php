@@ -21,7 +21,7 @@ class produk extends CI_Controller
     public function store()
     {
         $data = [
-            'id_produk' => $this->input->post('id_produk'),
+            'id_produk' => null,
             'nama_produk' => $this->input->post('nama_produk'),
             'satuan' => $this->input->post('satuan'),
         ];

@@ -18,6 +18,12 @@
 		<label for="no_telp_supplier">Nomor Telepon Supplier : </label>
 		<input type="number" name="no_telp_supplier" id="no_telp_supplier" value="<?=$data->no_telp_supplier;?>">
 		<br>
+		<label for="nama_cp_supplier">Contact Person Supplier : </label>
+		<input type="text" name="nama_cp_supplier" id="nama_cp_supplier" value="<?=$data->nama_cp_supplier;?>">
+		<br>
+		<label for="no_telp_cp_supplier">Nomor Contact Person Supplier : </label>
+		<input type="number" name="no_telp_cp_supplier" id="no_telp_cp_supplier" value="<?=$data->no_telp_cp_supplier;?>">
+		<br>
 		<button type="submit" name="submit">Edit Data</button>
 	</form>
 	<button onclick="history.go(-1)">Back</button>

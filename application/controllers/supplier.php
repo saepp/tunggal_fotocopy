@@ -21,10 +21,12 @@ class supplier extends CI_Controller
     public function store()
     {
         $data = [
-            'id_supplier' => $this->input->post('id_supplier'),
+            'id_supplier' => null,
             'nama_supplier' => $this->input->post('nama_supplier'),
             'alamat_supplier' => $this->input->post('alamat_supplier'),
             'no_telp_supplier' => $this->input->post('no_telp_supplier'),
+            'nama_cp_supplier' => $this->input->post('nama_cp_supplier'),
+            'no_telp_cp_supplier' => $this->input->post('no_telp_cp_supplier'),
         ];
 
         try {
@@ -49,6 +51,8 @@ class supplier extends CI_Controller
             'nama_supplier' => $this->input->post('nama_supplier'),
             'alamat_supplier' => $this->input->post('alamat_supplier'),
             'no_telp_supplier' => $this->input->post('no_telp_supplier'),
+            'nama_cp_supplier' => $this->input->post('nama_cp_supplier'),
+            'no_telp_cp_supplier' => $this->input->post('no_telp_cp_supplier'),
         ];
 
         try {

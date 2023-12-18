@@ -21,9 +21,10 @@ class pelanggan extends CI_Controller
     public function store()
     {
         $data = [
-            'id_pelanggan' => $this->input->post('id_pelanggan'),
+            'id_pelanggan' => null,
             'nama_pelanggan' => $this->input->post('nama_pelanggan'),
             'alamat_pelanggan' => $this->input->post('alamat_pelanggan'),
+            'jenis_kelamin_pelanggan' => $this->input->post('jenis_kelamin_pelanggan'),
             'no_telp_pelanggan' => $this->input->post('no_telp_pelanggan'),
         ];
 
@@ -48,6 +49,7 @@ class pelanggan extends CI_Controller
         $data = [
             'nama_pelanggan' => $this->input->post('nama_pelanggan'),
             'alamat_pelanggan' => $this->input->post('alamat_pelanggan'),
+            'jenis_kelamin_pelanggan' => $this->input->post('jenis_kelamin_pelanggan'),
             'no_telp_pelanggan' => $this->input->post('no_telp_pelanggan'),
         ];
 

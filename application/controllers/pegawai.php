@@ -21,10 +21,11 @@ class pegawai extends CI_Controller
     public function store()
     {
         $data = [
-            'id_pegawai' => $this->input->post('id_pegawai'),
+            'id_pegawai' => null,
             'nama_pegawai' => $this->input->post('nama_pegawai'),
             'alamat_pegawai' => $this->input->post('alamat_pegawai'),
-            'no_telp_pegawai' => intval($this->input->post('no_telp_pegawai')),
+            'no_telp_pegawai' => $this->input->post('no_telp_pegawai'),
+            'jenis_kelamin_pegawai' => $this->input->post('jenis_kelamin_pegawai'),
             'posisi_pegawai' => $this->input->post('posisi_pegawai'),
         ];
 
@@ -50,6 +51,7 @@ class pegawai extends CI_Controller
             'nama_pegawai' => $this->input->post('nama_pegawai'),
             'alamat_pegawai' => $this->input->post('alamat_pegawai'),
             'no_telp_pegawai' => $this->input->post('no_telp_pegawai'),
+            'jenis_kelamin_pegawai' => $this->input->post('jenis_kelamin_pegawai'),
             'posisi_pegawai' => $this->input->post('posisi_pegawai'),
         ];
 

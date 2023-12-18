@@ -11,20 +11,20 @@
 	<a href="<?=base_url('/pegawai/create');?>">Tambah Data</a>
 	<table border="1">
 		<tr>
-			<th>ID Pegawai</th>
 			<th>Nama Pegawai</th>
 			<th>Alamat Pegawai</th>
 			<th>No Telepon Pegawai</th>
+			<th>Jenis Kelamin Pegawai</th>
 			<th>Posisi Pegawai</th>
 			<th colspan="2">Aksi</th>
 		</tr>
 <?php if (count($data) > 0): ?>
 	<?php foreach ($data as $row): ?>
 		<tr>
-			<td><?=$row->id_pegawai;?></td>
 			<td><?=$row->nama_pegawai;?></td>
 			<td><?=$row->alamat_pegawai;?></td>
 			<td><?=$row->no_telp_pegawai;?></td>
+			<td><?=$row->jenis_kelamin_pegawai;?></td>
 			<td><?=$row->posisi_pegawai;?></td>
 			<td><a href="<?=base_url('/pegawai/edit/' . $row->id_pegawai);?>">Edit Data</a></td>
 			<td><a href="<?=base_url('/pegawai/delete/' . $row->id_pegawai);?>">Hapus Data</a></td>
@@ -32,7 +32,7 @@
 	<?php endforeach;?>
 <?php else: ?>
 		<tr>
-			<td colspan="6" align="center">Belum ada data</td>
+			<td colspan="7" align="center">Belum ada data</td>
 		</tr>
 <?php endif;?>
 	</table>

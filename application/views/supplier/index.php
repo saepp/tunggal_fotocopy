@@ -11,19 +11,21 @@
 	<a href="<?=base_url('/supplier/create');?>">Tambah Data</a>
 	<table border="1">
 		<tr>
-			<th>ID Supplier</th>
 			<th>Nama Supplier</th>
 			<th>Alamat Supplier</th>
 			<th>No Telepon Supplier</th>
+			<th>Contact Person Supplier</th>
+			<th>Nomor Contact Person Supplier</th>
 			<th colspan="2">Aksi</th>
 		</tr>
 <?php if (count($data) > 0): ?>
 	<?php foreach ($data as $row): ?>
 		<tr>
-			<td><?=$row->id_supplier;?></td>
 			<td><?=$row->nama_supplier;?></td>
 			<td><?=$row->alamat_supplier;?></td>
 			<td><?=$row->no_telp_supplier;?></td>
+			<td><?=$row->nama_cp_supplier;?></td>
+			<td><?=$row->no_telp_cp_supplier;?></td>
 			<td><a href="<?=base_url('/supplier/edit/' . $row->id_supplier);?>">Edit Data</a></td>
 			<td><a href="<?=base_url('/supplier/delete/' . $row->id_supplier);?>">Hapus Data</a></td>
 		</tr>
