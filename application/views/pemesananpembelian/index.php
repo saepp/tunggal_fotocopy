@@ -31,8 +31,8 @@
 			<td><?=$row->tgl_jatuh_tempo;?></td>
 			<td><?=$row->subtotal_pemesanan == 0 ? "0" : $row->subtotal_pemesanan?></td>
 			<td><a href="<?=base_url('/pemesananpembelian/' . $row->id_pemesanan_pembelian_header . '/detail/');?>">Detail Data</a></td>
-			<td><a href="<?=base_url('/pemesananpembelian/' . $row->id_pemesanan_pembelian_header . '/edit/');?>">Edit Data</a></td>
-			<td><a href="<?=base_url('/pemesananpembelian/' . $row->id_pemesanan_pembelian_header . '/delete/');?>">Hapus Data</a></td>
+			<td><a href="<?=base_url('/pemesananpembelian/edit/' . $row->id_pemesanan_pembelian_header);?>">Edit Data</a></td>
+			<td><a href="<?=base_url('/pemesananpembelian/delete/' . $row->id_pemesanan_pembelian_header);?>">Hapus Data</a></td>
 		</tr>
 	<?php endforeach;?>
 <?php else: ?>
