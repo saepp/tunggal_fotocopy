@@ -67,7 +67,7 @@ class penerimaanpembelian extends CI_Controller
         }
     }
 
-    public function destroy($id_penerimaan_pembelian_header)
+    public function delete($id_penerimaan_pembelian_header)
     {
         try {
             $this->PenerimaanpembelianheaderModel->delete($id_penerimaan_pembelian_header);
