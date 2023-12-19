@@ -2,14 +2,8 @@
 
 function no_po($date)
 {
-    // database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "fotocopy-tunggal";
-
     // create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
 
     // check connection
     if ($conn->connect_error) {
@@ -42,14 +36,8 @@ function no_po($date)
 
 function no_pe($date)
 {
-    // database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "fotocopy-tunggal";
-
 // create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD'], $_ENV['DB_DATABASE']);
 
 // check connection
     if ($conn->connect_error) {
