@@ -26,9 +26,9 @@
 			<td><?=$row->no_pemesanan;?></td>
 			<td><?=$row->subtotal_penerimaan == 0 ? "0" : $row->subtotal_penerimaan?></td>
 			<td><?=$row->subtotal_pemesanan == 0 ? "0" : $row->subtotal_pemesanan?></td>
-			<td><a href="<?=base_url('/pemesananpembelian/' . $row->id_penerimaan_pembelian_header . '/detail/');?>">Detail Data</a></td>
-			<td><a href="<?=base_url('/pemesananpembelian/edit/' . $row->id_penerimaan_pembelian_header);?>">Edit Data</a></td>
-			<td><a href="<?=base_url('/pemesananpembelian/delete/' . $row->id_penerimaan_pembelian_header);?>">Hapus Data</a></td>
+			<td><a href="<?=base_url('/penerimaanpembelian/' . $row->id_penerimaan_pembelian_header . '/detail/');?>">Detail Data</a></td>
+			<td><a href="<?=base_url('/penerimaanpembelian/edit/' . $row->id_penerimaan_pembelian_header);?>">Edit Data</a></td>
+			<td><a href="<?=base_url('/penerimaanpembelian/delete/' . $row->id_penerimaan_pembelian_header);?>">Hapus Data</a></td>
 		</tr>
 	<?php endforeach;?>
 <?php else: ?>
