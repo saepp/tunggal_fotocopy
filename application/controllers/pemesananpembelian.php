@@ -25,13 +25,13 @@ class pemesananpembelian extends CI_Controller
 
     public function store()
     {
-        $tgl = date_create($this->input->post('tgl_pemesanan'));
+        $tgl = date_create();
         $tgl_format = date_format($tgl, 'Y-m-d');
 
         $data = [
             'id_pemesanan_pembelian_header' => null,
             'tgl_pemesanan' => date('Y-m-d', strtotime($tgl_format)),
-            'no_pemesanan' => no_pe($tgl_format),
+            'no_pemesanan' => no_po($tgl_format),
             'keterangan' => $this->input->post('keterangan'),
             'status' => 'Proses',
             'tgl_jatuh_tempo' => $this->input->post('tgl_jatuh_tempo'),
