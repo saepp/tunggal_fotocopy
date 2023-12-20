@@ -52,8 +52,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = false;
+// PEMESANAN PEMBELIAN
 $route['pemesananpembelian/(:num)/detail'] = 'pemesananpembelian/detail/$1';
-$route['pemesananpembelian/(:num)/storedetail'] = 'pemesananpembelian/storedetail/$1';
 $route['pemesananpembelian/(:num)/editdetail/(:num)'] = 'pemesananpembelian/editdetail/$1/$2';
 $route['pemesananpembelian/(:num)/updatedetail/(:num)'] = 'pemesananpembelian/updatedetail/$1/$2';
 $route['pemesananpembelian/(:num)/deletedetail/(:num)'] = 'pemesananpembelian/deletedetail/$1/$2';
+
+// PENERIMAAN PEMBELIAN
+$route['penerimaanpembelian/(:num)/detail'] = 'penerimaanpembelian/detail/$1';
+$route['penerimaanpembelian/(:num)/deletedetail/(:num)'] = 'penerimaanpembelian/deletedetail/$1/$2';
