@@ -12,6 +12,18 @@ class PenerimaanpembeliandetailModel extends CI_Model
         return $this->db->get()->result();
     }
 
+    public function getStockLeft($id_pemesanan_pembelian_header)
+    {
+        $this->db->select('c.id_produk, c.nama_produk, SUM(b.kuantitas) as stock_pemesanan');
+        $this->db->select('(SELECT COALESCE(SUM(d.kuantitas), 0) FROM penerimaan_pembelian_detail d LEFT JOIN penerimaan_pembelian_header e ON d.id_penerimaan_pembelian_header = e.id_penerimaan_pembelian_header WHERE d.id_produk = c.id_produk) as stock_penerimaan');
+        $this->db->from('pemesanan_pembelian_header a');
+        $this->db->join('pemesanan_pembelian_detail b', 'a.id_pemesanan_pembelian_header = b.id_pemesanan_pembelian_header', 'left');
+        $this->db->join('produk c', 'b.id_produk = c.id_produk', 'left');
+        $this->db->where('b.id_pemesanan_pembelian_header', $id_pemesanan_pembelian_header);
+        $this->db->group_by('b.id_produk');
+        return $this->db->get()->result();
+    }
+
     public function getAllProdukByPemesanan($id_pemesanan_pembelian_header)
     {
         $this->db->select('d.nama_produk, d.id_produk');
@@ -61,9 +73,15 @@ class PenerimaanpembeliandetailModel extends CI_Model
         return $result;
     }
 
-    public function insert($data)
+    public function insertPenerimaan($data)
     {
-        $result = $this->db->insert('penerimaan_pembelian_detail', $data);
+        $this->db->insert('penerimaan_pembelian_detail', $data);
+        return $this->db->insert_id();
+    }
+
+    public function insertPersediaan($data)
+    {
+        $result = $this->db->insert('persediaan', $data);
         return $result;
     }
 

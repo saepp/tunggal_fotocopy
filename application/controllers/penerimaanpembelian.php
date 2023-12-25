@@ -89,11 +89,9 @@ class penerimaanpembelian extends CI_Controller
         $id_pemesanan_pembelian_header = $header->id_pemesanan_pembelian_header;
         $produk = $this->PenerimaanpembeliandetailModel->getAllProdukByPemesanan($id_pemesanan_pembelian_header);
         $pegawai = $this->PegawaiModel->getAllData();
+        $stock_left = $this->PenerimaanpembeliandetailModel->getStockLeft($id_pemesanan_pembelian_header);
 
-        $stock_pemesanan = $this->PenerimaanpembeliandetailModel->getStockPemesananByProduk($id_pemesanan_pembelian_header, $this->input->post('id_produk'))->kuantitas_pemesanan;
-        $stock_penerimaan = $this->PenerimaanpembeliandetailModel->getStockPenerimaanByProduk($this->input->post('id_penerimaan_pembelian_header'), $this->input->post('id_produk'))->kuantitas_penerimaan;
-
-        return $this->load->view('penerimaanpembelian/detail', ['id_penerimaan_pembelian_header' => $id_penerimaan_pembelian_header, 'data' => $data, 'header' => $header, 'produk' => $produk, 'pegawai' => $pegawai]);
+        return $this->load->view('penerimaanpembelian/detail', ['id_penerimaan_pembelian_header' => $id_penerimaan_pembelian_header, 'data' => $data, 'header' => $header, 'produk' => $produk, 'pegawai' => $pegawai, 'stock_left' => $stock_left]);
     }
 
     public function storedetail()
@@ -101,7 +99,10 @@ class penerimaanpembelian extends CI_Controller
         $header = $this->PenerimaanpembeliandetailModel->getAllHeader($this->input->post('id_penerimaan_pembelian_header'));
         $id_pemesanan_pembelian_header = $header->id_pemesanan_pembelian_header;
 
-        $data = [
+        $tgl = date_create();
+        $tgl_format = date_format($tgl, 'Y-m-d');
+
+        $data_penerimaan = [
             'id_penerimaan_pembelian_detail' => null,
             'kuantitas' => $this->input->post('kuantitas'),
             'base_price' => round(($this->input->post('base_price') / 1.11), 0),
@@ -121,7 +122,18 @@ class penerimaanpembelian extends CI_Controller
         }
 
         try {
-            $this->PenerimaanpembeliandetailModel->insert($data);
+            $penerimaan = $this->PenerimaanpembeliandetailModel->insertPenerimaan($data_penerimaan);
+
+            $data_persediaan = [
+                'id_persediaan' => null,
+                'tgl_persediaan' => date('Y-m-d', strtotime($tgl_format)),
+                'keterangan' => $header->keterangan,
+                'kuantitas' => $this->input->post('kuantitas'),
+                'harga_satuan' => $this->input->post('base_price'),
+                'id_penerimaan_pembelian_detail' => $penerimaan,
+                'id_produk' => $this->input->post('id_produk'),
+            ];
+            $this->PenerimaanpembeliandetailModel->insertPersediaan($data_persediaan);
             $this->session->set_flashdata('message', 'Data berhasil disimpan');
             return redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
         } catch (\Exception $e) {
@@ -135,9 +147,10 @@ class penerimaanpembelian extends CI_Controller
         try {
             $this->PenerimaanpembeliandetailModel->delete($id_penerimaan_pembelian_detail);
             $this->session->set_flashdata('message', 'Data berhasil dihapus');
+            return redirect('/penerimaanpembelian/' . $id_penerimaan_pembelian_header . '/detail');
         } catch (\Exception $e) {
             $this->session->set_flashdata('message', 'Data gagal dihapus');
+            return redirect('/penerimaanpembelian/' . $id_penerimaan_pembelian_header . '/detail');
         }
-        redirect('/penerimaanpembelian/' . $id_penerimaan_pembelian_header . '/detail');
     }
 }

@@ -17,8 +17,8 @@
 		<label for="id_produk">Nama Produk : </label>
 		<select name="id_produk" id="id_produk">
 			<option value="" disabled selected>>> Pilih Produk <<</option>
-			<?php foreach ($produk as $row): ?>
-				<option value="<?=$row->id_produk;?>"><?=$row->nama_produk;?></option>
+			<?php foreach ($stock_left as $row): ?>
+				<option value="<?=$row->id_produk;?>"><?=$row->nama_produk;?> - <?=$row->stock_pemesanan - $row->stock_penerimaan?></option>
 			<?php endforeach;?>
 		</select>
 		<br>
