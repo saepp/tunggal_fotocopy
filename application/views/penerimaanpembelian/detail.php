@@ -11,6 +11,7 @@
 	<p>Tanggal Pemesanan : <strong><?=date('d F Y', strtotime($header->tgl_penerimaan))?></strong></p>
 	<p>No Pemesanan : <strong><?=$header->no_pemesanan?></strong></p>
 	<p>Keterangan : <strong><?=$header->keterangan?></strong></p>
+	<p><strong><?=$this->session->flashdata('message');?></strong></p>
 	<form method="POST" action="<?=base_url('/penerimaanpembelian/storedetail');?>">
 		<input type="hidden" name="id_penerimaan_pembelian_header" value="<?=$id_penerimaan_pembelian_header?>">
 		<label for="id_produk">Nama Produk : </label>

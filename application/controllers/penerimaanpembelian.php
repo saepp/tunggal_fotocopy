@@ -86,13 +86,21 @@ class penerimaanpembelian extends CI_Controller
     {
         $data = $this->PenerimaanpembeliandetailModel->getAllData($id_penerimaan_pembelian_header);
         $header = $this->PenerimaanpembeliandetailModel->getAllHeader($id_penerimaan_pembelian_header);
-        $produk = $this->ProdukModel->getAllData();
+        $id_pemesanan_pembelian_header = $header->id_pemesanan_pembelian_header;
+        $produk = $this->PenerimaanpembeliandetailModel->getAllProdukByPemesanan($id_pemesanan_pembelian_header);
         $pegawai = $this->PegawaiModel->getAllData();
-        $this->load->view('penerimaanpembelian/detail', ['id_penerimaan_pembelian_header' => $id_penerimaan_pembelian_header, 'data' => $data, 'header' => $header, 'produk' => $produk, 'pegawai' => $pegawai]);
+
+        $stock_pemesanan = $this->PenerimaanpembeliandetailModel->getStockPemesananByProduk($id_pemesanan_pembelian_header, $this->input->post('id_produk'))->kuantitas_pemesanan;
+        $stock_penerimaan = $this->PenerimaanpembeliandetailModel->getStockPenerimaanByProduk($this->input->post('id_penerimaan_pembelian_header'), $this->input->post('id_produk'))->kuantitas_penerimaan;
+
+        return $this->load->view('penerimaanpembelian/detail', ['id_penerimaan_pembelian_header' => $id_penerimaan_pembelian_header, 'data' => $data, 'header' => $header, 'produk' => $produk, 'pegawai' => $pegawai]);
     }
 
     public function storedetail()
     {
+        $header = $this->PenerimaanpembeliandetailModel->getAllHeader($this->input->post('id_penerimaan_pembelian_header'));
+        $id_pemesanan_pembelian_header = $header->id_pemesanan_pembelian_header;
+
         $data = [
             'id_penerimaan_pembelian_detail' => null,
             'kuantitas' => $this->input->post('kuantitas'),
@@ -104,13 +112,21 @@ class penerimaanpembelian extends CI_Controller
             'id_pegawai' => $this->input->post('id_pegawai'),
         ];
 
+        $stock_pemesanan = $this->PenerimaanpembeliandetailModel->getStockPemesananByProduk($id_pemesanan_pembelian_header, $this->input->post('id_produk'))->kuantitas_pemesanan;
+        $stock_penerimaan = $this->PenerimaanpembeliandetailModel->getStockPenerimaanByProduk($this->input->post('id_penerimaan_pembelian_header'), $this->input->post('id_produk'))->kuantitas_penerimaan;
+
+        if (($stock_penerimaan + $this->input->post('kuantitas')) > $stock_pemesanan) {
+            $this->session->set_flashdata('message', 'Kuantitas melebihi pemesanan');
+            return redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
+        }
+
         try {
             $this->PenerimaanpembeliandetailModel->insert($data);
             $this->session->set_flashdata('message', 'Data berhasil disimpan');
-            redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
+            return redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
         } catch (\Exception $e) {
             $this->session->set_flashdata('message', 'Data gagal disimpan');
-            redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
+            return redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
         }
     }
 
