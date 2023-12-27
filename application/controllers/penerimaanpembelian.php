@@ -136,14 +136,14 @@ class penerimaanpembelian extends CI_Controller
 
             $data_jurnalpembeliandebit = [
                 'id_akun' => 9,
-                'id_pemesanan_pembelian_header' => $id_pemesanan_pembelian_header,
+                'id_penerimaan_pembelian_detail' => $penerimaan,
                 'nominal' => $this->input->post('base_price') * $this->input->post('kuantitas'),
                 'posisi_dr_cr' => 'debit',
             ];
 
             $data_jurnalpembeliancredit = [
                 'id_akun' => 14,
-                'id_pemesanan_pembelian_header' => $id_pemesanan_pembelian_header,
+                'id_penerimaan_pembelian_detail' => $penerimaan,
                 'nominal' => $this->input->post('base_price') * $this->input->post('kuantitas'),
                 'posisi_dr_cr' => 'credit',
             ];

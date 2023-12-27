@@ -15,7 +15,7 @@ class PenerimaanpembeliandetailModel extends CI_Model
     public function getStockLeft($id_pemesanan_pembelian_header)
     {
         $this->db->select('c.id_produk, c.nama_produk, SUM(b.kuantitas) as stock_pemesanan');
-        $this->db->select('(SELECT COALESCE(SUM(d.kuantitas), 0) FROM penerimaan_pembelian_detail d LEFT JOIN penerimaan_pembelian_header e ON d.id_penerimaan_pembelian_header = e.id_penerimaan_pembelian_header WHERE d.id_produk = c.id_produk) as stock_penerimaan');
+        $this->db->select("(SELECT COALESCE(SUM(d.kuantitas), 0) FROM penerimaan_pembelian_detail d LEFT JOIN penerimaan_pembelian_header e ON d.id_penerimaan_pembelian_header = e.id_penerimaan_pembelian_header WHERE d.id_produk = c.id_produk AND e.id_pemesanan_pembelian_header = '$id_pemesanan_pembelian_header') as stock_penerimaan");
         $this->db->from('pemesanan_pembelian_header a');
         $this->db->join('pemesanan_pembelian_detail b', 'a.id_pemesanan_pembelian_header = b.id_pemesanan_pembelian_header', 'left');
         $this->db->join('produk c', 'b.id_produk = c.id_produk', 'left');
