@@ -133,7 +133,24 @@ class penerimaanpembelian extends CI_Controller
                 'id_penerimaan_pembelian_detail' => $penerimaan,
                 'id_produk' => $this->input->post('id_produk'),
             ];
+
+            $data_jurnalpembeliandebit = [
+                'id_akun' => 9,
+                'id_pemesanan_pembelian_header' => $id_pemesanan_pembelian_header,
+                'nominal' => $this->input->post('base_price') * $this->input->post('kuantitas'),
+                'posisi_dr_cr' => 'debit',
+            ];
+
+            $data_jurnalpembeliancredit = [
+                'id_akun' => 14,
+                'id_pemesanan_pembelian_header' => $id_pemesanan_pembelian_header,
+                'nominal' => $this->input->post('base_price') * $this->input->post('kuantitas'),
+                'posisi_dr_cr' => 'credit',
+            ];
+
             $this->PenerimaanpembeliandetailModel->insertPersediaan($data_persediaan);
+            $this->PenerimaanpembeliandetailModel->insertJurnalPembelianDebit($data_jurnalpembeliandebit);
+            $this->PenerimaanpembeliandetailModel->insertJurnalPembelianCredit($data_jurnalpembeliancredit);
             $this->session->set_flashdata('message', 'Data berhasil disimpan');
             return redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
         } catch (\Exception $e) {

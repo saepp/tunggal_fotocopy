@@ -3,7 +3,11 @@ class AkunModel extends CI_Model
 {
     public function getAllData()
     {
-        $result = $this->db->get('akun')->result();
+        $this->db->select('a.*, b.kode_akun as kode_akun_header, a.nama_akun as nama_akun_header');
+        $this->db->from('akun a');
+        $this->db->join('akun b', 'a.header_akun = b.id_akun', 'left');
+        $this->db->order_by('a.id_akun', 'asc');
+        $result = $this->db->get()->result();
         return $result;
     }
 

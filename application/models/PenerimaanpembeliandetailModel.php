@@ -85,6 +85,18 @@ class PenerimaanpembeliandetailModel extends CI_Model
         return $result;
     }
 
+    public function insertJurnalPembelianDebit($data)
+    {
+        $result = $this->db->insert('jurnal_pembelian', $data);
+        return $result;
+    }
+
+    public function insertJurnalPembelianCredit($data)
+    {
+        $result = $this->db->insert('jurnal_pembelian', $data);
+        return $result;
+    }
+
     public function update($id_penerimaan_pembelian_header, $id_penerimaan_pembelian_detail, $data)
     {
         $result = $this->db->get_where('id_penerimaan_pembelian_detail', $id_penerimaan_pembelian_detail)->where('id_penerimaan_pembelian_header', $id_penerimaan_pembelian_header)->update('penerimaan_pembelian_detail', $data);

@@ -19,8 +19,8 @@
 <?php if (count($data) > 0): ?>
 	<?php foreach ($data as $row): ?>
 		<tr>
-			<td><?=$row->nama_akun;?></td>
-			<td><?=$row->header_akun;?></td>
+			<td><?=$row->nama_akun_header;?></td>
+			<td><?=$row->kode_akun_header;?></td>
 			<td><?=$row->kode_akun;?></td>
 			<td><a href="<?=base_url('/akun/edit/' . $row->id_akun);?>">Edit Data</a></td>
 			<td><a href="<?=base_url('/akun/delete/' . $row->id_akun);?>">Hapus Data</a></td>
