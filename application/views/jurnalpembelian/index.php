@@ -20,8 +20,8 @@
     $nojurnal[0] = "";
     $n = 1;
     ?>
-																	<?php foreach ($data as $row): ?>
-																	<?php $nojurnal[$n] = $row->no_penerimaan;
+			<?php foreach ($data as $row): ?>
+			<?php $nojurnal[$n] = $row->no_penerimaan;
     if ($nojurnal[$n] != $nojurnal[$n - 1]) {
         $nomor = $nojurnal[$n];
         $tgl = date('d F Y', strtotime($row->tgl_penerimaan));
@@ -30,13 +30,13 @@
         $tgl = "";
     }
     ?>
-																		<tr>
-																			<td><?=$nomor;?></td>
-																			<td><?=$tgl;?></td>
-																			<td><?=$row->kode_akun;?></td>
-																		<?php if ($row->posisi_dr_cr == 'credit'): ?>
-																			<td>&nbsp; &nbsp; &nbsp;<?=$row->nama_akun;?></td>
-																		<?php else: ?>
+			<tr>
+				<td><?=$nomor;?></td>
+				<td><?=$tgl;?></td>
+				<td><?=$row->kode_akun;?></td>
+				<?php if ($row->posisi_dr_cr == 'credit'): ?>
+						<td>&nbsp; &nbsp; &nbsp;<?=$row->nama_akun;?></td>
+				<?php else: ?>
 				<td><?=$row->nama_akun;?></td>
 			<?php endif;?>
 				<td><?=$row->posisi_dr_cr == 'debit' ? $row->nominal : '';?></td>
