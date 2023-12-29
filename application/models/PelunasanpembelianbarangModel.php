@@ -3,12 +3,11 @@ class PelunasanpembelianbarangModel extends CI_Model
 {
     public function getAllData()
     {
-        $this->db->select('a.*, b.no_penerimaan, c.*, e.*');
+        $this->db->select('a.*, b.no_penerimaan, d.*');
         $this->db->from('pelunasan_pembelian_barang a');
         $this->db->join('penerimaan_pembelian_header b', 'a.id_penerimaan_pembelian_header = b.id_penerimaan_pembelian_header', 'left');
-        $this->db->join('pembayaran c', 'a.id_pembayaran = c.id_pembayaran', 'left');
-        $this->db->join('pemesanan_pembelian_header d', 'b.id_pemesanan_pembelian_header = d.id_pemesanan_pembelian_header', 'left');
-        $this->db->join('supplier e', 'd.id_supplier = e.id_supplier', 'left');
+        $this->db->join('pemesanan_pembelian_header c', 'b.id_pemesanan_pembelian_header = c.id_pemesanan_pembelian_header', 'left');
+        $this->db->join('supplier d', 'c.id_supplier = d.id_supplier', 'left');
         return $this->db->get()->result();
     }
 
@@ -23,12 +22,6 @@ class PelunasanpembelianbarangModel extends CI_Model
         return $this->db->get()->result();
     }
 
-    public function getPembayaran()
-    {
-        $result = $this->db->get('pembayaran')->result();
-        return $result;
-    }
-
     public function getDataById($id_pelunasan_pembelian_barang)
     {
         return $this->db->get_where('pelunasan_pembelian_barang', ['id_pelunasan_pembelian_barang' => $id_pelunasan_pembelian_barang])->row();
@@ -37,6 +30,16 @@ class PelunasanpembelianbarangModel extends CI_Model
     public function insert($data)
     {
         return $this->db->insert('pelunasan_pembelian_barang', $data);
+    }
+
+    public function insertJurnalPembelianDebit($data)
+    {
+        return $this->db->insert('jurnal_pembelian', $data);
+    }
+
+    public function insertJurnalPembelianKredit($data)
+    {
+        return $this->db->insert('jurnal_pembelian', $data);
     }
 
     public function update($id_pelunasan_pembelian_barang, $data)
@@ -48,6 +51,12 @@ class PelunasanpembelianbarangModel extends CI_Model
     public function delete($id_pelunasan_pembelian_barang)
     {
         $result = $this->db->where('id_pelunasan_pembelian_barang', $id_pelunasan_pembelian_barang)->delete('pelunasan_pembelian_barang');
+        return $result;
+    }
+
+    public function deleteJurnal($id_penerimaan_pembelian_header, $id_akun, $posisi_dr_cr)
+    {
+        $result = $this->db->where('id_penerimaan_pembelian_header', $id_penerimaan_pembelian_header)->where('id_akun', $id_akun)->where('posisi_dr_cr', $posisi_dr_cr)->delete('jurnal_pembelian');
         return $result;
     }
 }

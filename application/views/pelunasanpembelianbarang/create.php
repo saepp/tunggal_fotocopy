@@ -19,14 +19,6 @@
 			<?php endforeach;?>
 		</select>
 		<br>
-		<label for="id_pembayaran">Pilih Pembayaran : </label>
-		<select name="id_pembayaran" id="id_pembayaran">
-			<option value="" disabled selected>-- Pilih Pembayaran --</option>
-			<?php foreach ($pembayaran as $p): ?>
-				<option value="<?=$p->id_pembayaran;?>"><?=$p->no_pembayaran;?> - <?=$p->tgl_pembayaran;?></option>
-			<?php endforeach;?>
-		</select>
-		<br>
 		<label for="nominal_pembayaran">Nominal Pembayaran : </label>
 		<input type="number" name="nominal_pembayaran" id="nominal_pembayaran" placeholder="Contoh : 10.000">
 		<br>

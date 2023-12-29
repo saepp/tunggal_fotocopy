@@ -20,8 +20,8 @@ class PenerimaanpembelianheaderModel extends CI_Model
 
     public function insert($data)
     {
-        $result = $this->db->insert('penerimaan_pembelian_header', $data);
-        return $result;
+        $this->db->insert('penerimaan_pembelian_header', $data);
+        return $this->db->insert_id();
     }
 
     public function update($id_penerimaan_pembelian_header, $data)

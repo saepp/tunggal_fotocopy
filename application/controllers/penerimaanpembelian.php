@@ -37,7 +37,26 @@ class penerimaanpembelian extends CI_Controller
         ];
 
         try {
-            $this->PenerimaanpembelianheaderModel->insert($data);
+            $penerimaan = $this->PenerimaanpembelianheaderModel->insert($data);
+
+            $data_jurnalpembeliandebit = [
+                'id_jurnal_pembelian' => null,
+                'id_akun' => 9,
+                'id_penerimaan_pembelian_header' => $penerimaan,
+                'nominal' => 0,
+                'posisi_dr_cr' => 'debit',
+            ];
+
+            $data_jurnalpembeliancredit = [
+                'id_jurnal_pembelian' => null,
+                'id_akun' => 14,
+                'id_penerimaan_pembelian_header' => $penerimaan,
+                'nominal' => 0,
+                'posisi_dr_cr' => 'credit',
+            ];
+
+            $this->PenerimaanpembeliandetailModel->insertJurnalPembelianDebit($data_jurnalpembeliandebit);
+            $this->PenerimaanpembeliandetailModel->insertJurnalPembelianCredit($data_jurnalpembeliancredit);
             $this->session->set_flashdata('message', 'Data berhasil disimpan');
             redirect(base_url('/penerimaanpembelian'));
         } catch (\Exception $e) {
@@ -133,24 +152,14 @@ class penerimaanpembelian extends CI_Controller
                 'id_penerimaan_pembelian_detail' => $penerimaan,
                 'id_produk' => $this->input->post('id_produk'),
             ];
+            $total = $this->PenerimaanpembeliandetailModel->getSumTotal($this->input->post('id_penerimaan_pembelian_header'))->total;
 
-            $data_jurnalpembeliandebit = [
-                'id_akun' => 9,
-                'id_penerimaan_pembelian_detail' => $penerimaan,
-                'nominal' => $this->input->post('base_price') * $this->input->post('kuantitas'),
-                'posisi_dr_cr' => 'debit',
+            $data_jurnalpembelian = [
+                'nominal' => $total,
             ];
 
-            $data_jurnalpembeliancredit = [
-                'id_akun' => 14,
-                'id_penerimaan_pembelian_detail' => $penerimaan,
-                'nominal' => $this->input->post('base_price') * $this->input->post('kuantitas'),
-                'posisi_dr_cr' => 'credit',
-            ];
-
+            $this->PenerimaanpembeliandetailModel->updateJurnal($this->input->post('id_penerimaan_pembelian_header'), $data_jurnalpembelian);
             $this->PenerimaanpembeliandetailModel->insertPersediaan($data_persediaan);
-            $this->PenerimaanpembeliandetailModel->insertJurnalPembelianDebit($data_jurnalpembeliandebit);
-            $this->PenerimaanpembeliandetailModel->insertJurnalPembelianCredit($data_jurnalpembeliancredit);
             $this->session->set_flashdata('message', 'Data berhasil disimpan');
             return redirect('/penerimaanpembelian/' . $this->input->post('id_penerimaan_pembelian_header') . '/detail');
         } catch (\Exception $e) {
@@ -163,6 +172,8 @@ class penerimaanpembelian extends CI_Controller
     {
         try {
             $this->PenerimaanpembeliandetailModel->delete($id_penerimaan_pembelian_detail);
+            $total = $this->PenerimaanpembeliandetailModel->getSumTotal($id_penerimaan_pembelian_header)->total;
+            $this->PenerimaanpembeliandetailModel->updateJurnal($id_penerimaan_pembelian_header, ['nominal' => $total]);
             $this->session->set_flashdata('message', 'Data berhasil dihapus');
             return redirect('/penerimaanpembelian/' . $id_penerimaan_pembelian_header . '/detail');
         } catch (\Exception $e) {

@@ -21,7 +21,6 @@ class PemesananpembeliandetailModel extends CI_Model
         $this->db->join('supplier b', 'a.id_supplier = b.id_supplier', 'left');
         $this->db->where('id_pemesanan_pembelian_header', $id_pemesanan_pembelian_header);
         $header = $this->db->get()->row();
-
         return $header;
     }
 

@@ -16,8 +16,7 @@ class pelunasanpembelianbarang extends CI_Controller
     public function create()
     {
         $penerimaan = $this->PelunasanpembelianbarangModel->getPenerimaan();
-        $pembayaran = $this->PelunasanpembelianbarangModel->getPembayaran();
-        return $this->load->view('pelunasanpembelianbarang/create', ['penerimaan' => $penerimaan, 'pembayaran' => $pembayaran]);
+        return $this->load->view('pelunasanpembelianbarang/create', ['penerimaan' => $penerimaan]);
     }
 
     public function store()
@@ -32,11 +31,29 @@ class pelunasanpembelianbarang extends CI_Controller
             'nominal_pembayaran' => $this->input->post('nominal_pembayaran'),
             'keterangan' => $this->input->post('keterangan'),
             'id_penerimaan_pembelian_header' => $this->input->post('id_penerimaan_pembelian_header'),
-            'id_pembayaran' => $this->input->post('id_pembayaran'),
         ];
 
         try {
+
+            $dataJurnalPembelianDebit = [
+                'id_jurnal_pembelian' => null,
+                'id_akun' => 14,
+                'id_penerimaan_pembelian_header' => $this->input->post('id_penerimaan_pembelian_header'),
+                'nominal' => $this->input->post('nominal_pembayaran'),
+                'posisi_dr_cr' => 'debit',
+            ];
+
+            $dataJurnalPembelianKredit = [
+                'id_jurnal_pembelian' => null,
+                'id_akun' => 5,
+                'id_penerimaan_pembelian_header' => $this->input->post('id_penerimaan_pembelian_header'),
+                'nominal' => $this->input->post('nominal_pembayaran'),
+                'posisi_dr_cr' => 'credit',
+            ];
+
             $this->PelunasanpembelianbarangModel->insert($data);
+            $this->PelunasanpembelianbarangModel->insertJurnalPembelianDebit($dataJurnalPembelianDebit);
+            $this->PelunasanpembelianbarangModel->insertJurnalPembelianKredit($dataJurnalPembelianKredit);
             $this->session->set_flashdata('message', 'Data berhasil disimpan');
             return redirect(base_url('/pelunasanpembelianbarang'));
         } catch (\Exception $e) {
@@ -49,17 +66,13 @@ class pelunasanpembelianbarang extends CI_Controller
     {
         $data = $this->PelunasanpembelianbarangModel->getDataById($id_pelunasan_pembelian_barang);
         $penerimaan = $this->PelunasanpembelianbarangModel->getPenerimaan();
-        $pembayaran = $this->PelunasanpembelianbarangModel->getPembayaran();
-        return $this->load->view('pelunasanpembelianbarang/edit', ['data' => $data, 'penerimaan' => $penerimaan, 'pembayaran' => $pembayaran]);
+        return $this->load->view('pelunasanpembelianbarang/edit', ['data' => $data, 'penerimaan' => $penerimaan]);
     }
 
     public function update($id_pelunasan_pembelian_barang)
     {
         $data = [
-            'nominal_pembayaran' => $this->input->post('nominal_pembayaran'),
             'keterangan' => $this->input->post('keterangan'),
-            'id_penerimaan_pembelian_header' => $this->input->post('id_penerimaan_pembelian_header'),
-            'id_pembayaran' => $this->input->post('id_pembayaran'),
         ];
 
         try {
@@ -75,6 +88,9 @@ class pelunasanpembelianbarang extends CI_Controller
     public function delete($id_pelunasan_pembelian_barang)
     {
         try {
+            $id_penerimaan_pembelian_header = $this->PelunasanpembelianbarangModel->getDataById($id_pelunasan_pembelian_barang)->id_penerimaan_pembelian_header;
+            $this->PelunasanpembelianbarangModel->deleteJurnal($id_penerimaan_pembelian_header, 14, 'debit');
+            $this->PelunasanpembelianbarangModel->deleteJurnal($id_penerimaan_pembelian_header, 5, 'credit');
             $this->PelunasanpembelianbarangModel->delete($id_pelunasan_pembelian_barang);
             $this->session->set_flashdata('message', 'Data berhasil dihapus');
             return redirect(base_url('/pelunasanpembelianbarang'));

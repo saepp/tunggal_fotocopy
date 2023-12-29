@@ -61,3 +61,7 @@ $route['pemesananpembelian/(:num)/deletedetail/(:num)'] = 'pemesananpembelian/de
 // PENERIMAAN PEMBELIAN
 $route['penerimaanpembelian/(:num)/detail'] = 'penerimaanpembelian/detail/$1';
 $route['penerimaanpembelian/(:num)/deletedetail/(:num)'] = 'penerimaanpembelian/deletedetail/$1/$2';
+
+// PENJUALAN BARANG
+$route['penjualanbarang/(:num)/detail'] = 'penjualanbarang/detail/$1';
+$route['penjualanbarang/(:num)/deletedetail/(:num)'] = 'penjualanbarang/deletedetail/$1/$2';

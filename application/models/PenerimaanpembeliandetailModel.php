@@ -67,6 +67,14 @@ class PenerimaanpembeliandetailModel extends CI_Model
         return $this->db->get()->row();
     }
 
+    public function getSumTotal($id_penerimaan_pembelian_header)
+    {
+        $this->db->select('SUM((base_price + ppn) * kuantitas) as total');
+        $this->db->from('penerimaan_pembelian_detail');
+        $this->db->where('id_penerimaan_pembelian_header', $id_penerimaan_pembelian_header);
+        return $this->db->get()->row();
+    }
+
     public function getDataById($id_penerimaan_pembelian_detail)
     {
         $result = $this->db->where('penerimaan_pembelian_detail', ['id_penerimaan_pembelian_detail' => $id_penerimaan_pembelian_detail])->row();
@@ -100,6 +108,12 @@ class PenerimaanpembeliandetailModel extends CI_Model
     public function update($id_penerimaan_pembelian_header, $id_penerimaan_pembelian_detail, $data)
     {
         $result = $this->db->get_where('id_penerimaan_pembelian_detail', $id_penerimaan_pembelian_detail)->where('id_penerimaan_pembelian_header', $id_penerimaan_pembelian_header)->update('penerimaan_pembelian_detail', $data);
+        return $result;
+    }
+
+    public function updateJurnal($id_penerimaan_pembelian_header, $data)
+    {
+        $result = $this->db->where('id_penerimaan_pembelian_header', $id_penerimaan_pembelian_header)->update('jurnal_pembelian', $data);
         return $result;
     }
 
