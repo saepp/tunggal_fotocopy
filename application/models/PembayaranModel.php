@@ -7,7 +7,7 @@ class PembayaranModel extends CI_Model
         $this->db->from('pembayaran a');
         $this->db->join('penjualan_barang_header b', 'a.id_penjualan_barang_header = b.id_penjualan_barang_header', 'left');
         $this->db->join('penjualan_barang_detail c', 'a.id_penjualan_barang_header = c.id_penjualan_barang_header', 'left');
-        $this->db->group_by('a.id_penjualan_barang_header');
+        $this->db->group_by('a.id_pembayaran');
         return $this->db->get()->result();
     }
 
