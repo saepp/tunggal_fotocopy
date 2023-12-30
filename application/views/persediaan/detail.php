@@ -28,7 +28,7 @@
 			<td><?=$row->keterangan;?></td>
 			<td><?=$row->harga_satuan;?></td>
 			<td><?=$row->kuantitas;?></td>
-			<td><?=$row->total_pengambilan;?></td>
+			<td><a href="<?=base_url('/persediaan/pengambilanproduk/' . $row->id_persediaan);?>"><?=$row->total_pengambilan;?></a></td>
 			<td><?=$row->kuantitas - $row->total_pengambilan;?></td>
 			<td><?=($row->kuantitas - $row->total_pengambilan) * $row->harga_satuan;?></td>
 		</tr>

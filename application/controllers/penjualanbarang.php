@@ -95,14 +95,6 @@ class penjualanbarang extends CI_Controller
 
     public function storedetail()
     {
-        $data = [
-            'id_penjualan_barang_detail' => null,
-            'kuantitas' => $this->input->post('kuantitas'),
-            'harga_jual' => $this->input->post('harga_jual'),
-            'id_produk' => $this->input->post('id_produk'),
-            'id_penjualan_barang_header' => $this->input->post('id_penjualan_barang_header'),
-        ];
-
         $dataStock = $this->PenjualanbarangdetailModel->getDetailStock($this->input->post('id_penjualan_barang_header'), $this->input->post('id_produk'))->total_penjualan;
         $dataPersediaan = $this->PenjualanbarangdetailModel->getDetailPersediaan($this->input->post('id_produk'))->stok;
 
@@ -112,7 +104,7 @@ class penjualanbarang extends CI_Controller
         }
 
         try {
-            $this->PenjualanbarangdetailModel->insert($data);
+            $this->PenjualanbarangdetailModel->pengambilanPenjualan($this->input->post('id_penjualan_barang_header'), $this->input->post('id_produk'), $this->input->post('kuantitas'), $this->input->post('harga_jual'));
             $this->session->set_flashdata('message', 'Data berhasil disimpan');
             return redirect('/penjualanbarang/' . $this->input->post('id_penjualan_barang_header') . '/detail');
         } catch (\Exception $e) {

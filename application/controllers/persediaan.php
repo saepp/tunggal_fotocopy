@@ -5,6 +5,7 @@ class persediaan extends CI_Controller
     {
         Parent::__construct();
         $this->load->model('PersediaanModel');
+        $this->load->model('PengambilanModel');
     }
 
     public function index()
@@ -17,5 +18,11 @@ class persediaan extends CI_Controller
     {
         $data = $this->PersediaanModel->getAllDataDetail($id_item);
         $this->load->view('persediaan/detail', ['data' => $data]);
+    }
+
+    public function pengambilanproduk($id_persediaan)
+    {
+        $data = $this->PengambilanModel->getDataById($id_persediaan);
+        $this->load->view('persediaan/pengambilanproduk', ['data' => $data]);
     }
 }
